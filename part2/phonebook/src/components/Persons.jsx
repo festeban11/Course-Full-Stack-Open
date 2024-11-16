@@ -5,6 +5,7 @@ const Person = (props) => (
          <div key={i}>
          {person.name + " "}
          {person.number}
+          <button onClick={() => props.handleDeletePerson(person.name, person.id)}>delete</button>
         </div>
           
         )}
