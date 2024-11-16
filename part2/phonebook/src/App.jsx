@@ -10,8 +10,33 @@ const App = () => {
   const [searchName, setSearchName] = useState('')
   const [search, setSearch] = useState([])
   const [newNumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState(null);
+
+ 
+
+  const Notification = ({ message }) => {
+
+    const messageStyle = {
+      color: 'red',
+      background: 'lightgrey',
+      fontsize: '20px',
+      borderstyle: 'solid',
+      borderradius: '5px',
+      padding: '10px',
+      marginbottom: '10px',
+    }
 
 
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div style={messageStyle}>
+        {message}
+      </div>
+    )
+  }
 
   useEffect(() => {
     personServices.getAll().then((response) => {
@@ -33,7 +58,13 @@ const App = () => {
           setPersons(
             persons.map((person) => (person.name === newName ? changedPerson : person))
           );
-        })        
+          setMessage(`Updated ${newName}`)
+          setTimeout(() => {
+            setMessage(null)
+          }
+          , 5000)
+          
+        })
       }
     }
     else{
@@ -43,6 +74,11 @@ const App = () => {
       }
       setPersons(persons.concat(nameObject))
       personServices.create(nameObject).then((response) => {
+        setMessage(`Added ${newName}`)
+        setTimeout(() => {
+          setMessage(null)
+        }
+        , 5000)
         console.log(response)
       })
     }
@@ -76,9 +112,15 @@ const App = () => {
     if(result){
       personServices.deletePerson(id).then((response) => {
         console.log(response)
-      });
-      setPersons(persons.filter((person) => person.id !== id
+        setPersons(persons.filter((person) => person.id !== id
       ));
+      }).catch((error) => {
+        setMessage(`Information of ${name} has already been removed from server`)
+        setTimeout(() => {
+          setMessage(null)
+        }
+        , 5000)
+      });
     }
   }
   
@@ -86,6 +128,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={message} />
       <h2>Phonebook</h2>
         <Filter newNumber={newNumber} handleSearchChange={handleSearchChange} />
      
