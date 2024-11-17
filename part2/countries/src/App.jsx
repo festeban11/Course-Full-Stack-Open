@@ -50,7 +50,7 @@ const App = () => {
         <div>Too many matches, specify another filter</div>
       ) : (
         <Countries
-          countries={showCountry}
+          countries={showCountry} setShowCountry={setShowCountry}
           
         />
       )}
