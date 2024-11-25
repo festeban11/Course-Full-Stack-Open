@@ -5,6 +5,7 @@ import Countries from './components/Countries';
 import Country from './components/Country';
 
 import axios from 'axios';
+import Weather from './components/Weather';
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -51,8 +52,8 @@ const App = () => {
       ) : (
         <Countries
           countries={showCountry} setShowCountry={setShowCountry}
-          
         />
+       
       )}
      
     </div>
