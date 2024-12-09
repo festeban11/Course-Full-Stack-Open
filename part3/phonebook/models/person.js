@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', false)
-const password = "h8c6z1OgTPJ5vDcK";
+
 const url =
   `mongodb+srv://fnandoesteban:${password}@cluster0.ffw8r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
