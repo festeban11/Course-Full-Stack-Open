@@ -13,8 +13,9 @@ const url =
   `mongodb+srv://fnandoesteban:${password}@cluster0.ffw8r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery',false)
-
 mongoose.connect(url)
+
+
 
 const contactSchema = new mongoose.Schema({
     name: String,
