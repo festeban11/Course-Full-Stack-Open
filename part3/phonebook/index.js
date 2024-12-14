@@ -58,7 +58,7 @@ app.get("/api/persons/:id", (request, response, next) => {
       .catch((error) => next(error));
   });
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const body = req.body;
 
     if (!body.name || !body.number) {
@@ -73,10 +73,7 @@ app.post('/api/persons', (req, res) => {
     contact
         .save()
         .then(savedContact => res.json(savedContact))
-        .catch(error => {
-            console.error('Error saving contact:', error.message);
-            res.status(500).json({ error: 'Failed to save the contact' });
-        });
+        .catch(error => next(error));
 });
 
 app.put("/api/persons/:id", (request, response, next) => {
@@ -104,7 +101,9 @@ const unknownEndpoint = (request, response) => {
   
     if (error.name === 'CastError') {
       return response.status(400).send({ error: 'malformatted id' })
-    } 
+    } else if (error.name === 'ValidationError') {
+      return response.status(400).json({ error: error.message })
+    }
   
     next(error)
   }
